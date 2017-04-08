@@ -34,7 +34,15 @@ public class Tank : MonoBehaviour {
 
     public AudioClip wayPointAudioClip;
 
+    public QuestManager manager;
+    public int health = 100;
+    public GameObject healthBar;
+    public GameObject boostBar;
 
+    public float boostSeconds;
+    public float boostMax;
+    public float boostRecharge;
+    public bool boostEmpty;
 
     void Awake() {
         audioSource = GetComponent<AudioSource>();
@@ -45,10 +53,14 @@ public class Tank : MonoBehaviour {
     void Start() {
         // set the initial previous track position as the initial position
         previousTrackPosition = transform.position;
+        boostMax = manager.raceQuest.boostSeconds;
+        boostSeconds = boostMax;
+        boostRecharge = manager.raceQuest.boostRecharge;
     }
 
     // Update is called once per frame
     void Update() {
+
 
         // mouse coordinates in screen, viewport and world spaces
         mouseScreenCoordinates = Input.mousePosition;
@@ -87,9 +99,29 @@ public class Tank : MonoBehaviour {
         // rotate toward new forward
         transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg);
 
+        if (boostSeconds <= 0)
+        {
+            boostSeconds = 0;
+            boostEmpty = true;
+        }
+        boostBar.transform.localScale = new Vector3(1, boostSeconds/boostMax, 1);
         // move forward
+        if (Input.GetMouseButton(1) && !boostEmpty)
+        {
+            transform.Translate(forward * speed * Time.deltaTime, Space.World);
+            boostSeconds -= 1f * Time.deltaTime;
+        }
+
+        else if (boostSeconds <= boostMax)
+        {
+            boostSeconds += boostRecharge * Time.deltaTime;
+        }
         transform.Translate(forward * speed * Time.deltaTime, Space.World);
 
+        if (boostEmpty && boostSeconds > boostMax/2)
+        {
+            boostEmpty = false;
+        }
 
         // once the tank has moved, we push the crosshair out from the tank
 
@@ -126,6 +158,22 @@ public class Tank : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Waypoint") {
             audioSource.PlayOneShot(wayPointAudioClip);
+        }
+        if (other.tag == "Bullet" && manager.questState == QuestManager.QuestState.InProgress)
+        {
+            health -= manager.raceQuest.bulletDamage;
+
+            if (health < 0)
+            {
+                health = 0;
+            }
+            
+            healthBar.transform.localScale = new Vector3(1, health/100f , 1);
+
+            if (health == 0)
+            {
+                manager.SendMessage("QuestFailed");
+            }
         }
     }
 }
