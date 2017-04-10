@@ -32,6 +32,8 @@ public class QuestManager : MonoBehaviour {
 
     AudioSource audioSource;
 
+    public bool selected;
+
     void Awake() {
         // Start the race on awake, set to in progress, and spawn the first point.
         audioSource = GetComponent<AudioSource>();
@@ -94,4 +96,31 @@ public class QuestManager : MonoBehaviour {
         raceWaypointIndex++;
         CreateTimedWaypoint(raceWaypointIndex);
     }
+
+    public void OnDrawGizmosSelected()
+    {
+        if (selected)
+        {
+            for (int i = 0; i < raceQuest.timedWaypoints.Count; i++)
+            {
+                if (i < raceWaypointIndex)
+                {
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawSphere(new Vector3(raceQuest.timedWaypoints[i].x, raceQuest.timedWaypoints[i].y, 0), 0.3f);
+                }
+                if (i == raceWaypointIndex)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawSphere(new Vector3(raceQuest.timedWaypoints[i].x, raceQuest.timedWaypoints[i].y, 0), 0.3f);
+                }
+                if (i > raceWaypointIndex)
+                {
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawSphere(new Vector3(raceQuest.timedWaypoints[i].x, raceQuest.timedWaypoints[i].y, 0), 0.3f);
+                }
+            }
+        }
+
+    }
+
 }

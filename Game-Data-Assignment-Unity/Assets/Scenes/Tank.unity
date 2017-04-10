@@ -3504,7 +3504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questState: 0
-  raceQuest: {fileID: 11400000, guid: feb42cc431ad7d747b8db30dae32d19a, type: 2}
+  raceQuest: {fileID: 11400000, guid: 50e9de9275d836946b0a82a9af9b0891, type: 2}
   raceWaypointIndex: 0
   waypointMarkerPrefab: {fileID: 130812, guid: d9be9b08141861341bf212b10127a7c6, type: 2}
   countdownText: {fileID: 183108309}
@@ -3514,6 +3514,7 @@ MonoBehaviour:
     type: 3}
   questFailedAudioClip: {fileID: 8300000, guid: 3ffd516422d5da74d9b179738f0a41cb,
     type: 3}
+  selected: 1
 --- !u!4 &195076191
 Transform:
   m_ObjectHideFlags: 0

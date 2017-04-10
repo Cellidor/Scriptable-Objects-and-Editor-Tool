@@ -12,21 +12,27 @@ MonoBehaviour:
   m_Name: Race 1
   m_EditorClassIdentifier: 
   timedWaypoints:
-  - x: 4
-    y: 2
+  - waypointNumber: 'Waypoint # 1'
+    x: 4.717859
+    y: -2.546441
     timelimit: 8
-  - x: -3
+  - waypointNumber: 'Waypoint # 2'
+    x: -3
     y: -3
     timelimit: 10
-  - x: -4
-    y: 3
+  - waypointNumber: 'Waypoint # 3'
+    x: -2.1605892
+    y: 2.5057397
     timelimit: 6
-  - x: 0
+  - waypointNumber: 'Waypoint # 4'
+    x: 0
     y: 0
     timelimit: 7
-  - x: 3
-    y: 4
+  - waypointNumber: 'Waypoint # 5'
+    x: 3.1938019
+    y: 3.6554646
     timelimit: 8
-  bulletDamage: 10
+  bulletDamage: 14
   boostSeconds: 5
   boostRecharge: 1
+  image: {fileID: 0}
